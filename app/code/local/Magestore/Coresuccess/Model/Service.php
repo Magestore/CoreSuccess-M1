@@ -564,4 +564,12 @@ class Magestore_Coresuccess_Model_Service
     {
         return self::getService('inventorysuccess/service_installation_convertDataService');
     }     
+    
+    /**
+     * @return Magestore_Inventorysuccess_Model_Service_Warehouse_StoreService
+     */
+    public static function warehouseStoreService()
+    {
+        return self::getService('inventorysuccess/service_warehouse_storeService');
+    }         
 }

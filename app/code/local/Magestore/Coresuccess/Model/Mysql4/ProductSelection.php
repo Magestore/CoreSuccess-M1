@@ -61,7 +61,7 @@ class Magestore_Coresuccess_Model_Mysql4_ProductSelection extends Magestore_Core
 
         $selectionProducts = $collection->addFieldToFilter($selectionResource->getIdFieldName(), $selection->getId());
         if (count($productIds)) {
-            $selectionProducts->addFieldToFilter('product_id', ['in' => $productIds]);
+            $selectionProducts->addFieldToFilter('product_id', array('in' => $productIds));
         }
         return $selectionProducts;
     }    

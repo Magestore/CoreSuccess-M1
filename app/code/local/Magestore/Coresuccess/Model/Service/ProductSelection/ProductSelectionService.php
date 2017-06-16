@@ -69,7 +69,7 @@ class Magestore_Coresuccess_Model_Service_ProductSelection_ProductSelectionServi
      */
     public function addProduct(Magestore_Coresuccess_Model_Service_ProductSelection_SelectionInterface $selection, $productId, $data)
     {
-        $this->addProducts($selection, [$productId => $data]);
+        $this->addProducts($selection, array($productId => $data));
         return $this;
     }
 
