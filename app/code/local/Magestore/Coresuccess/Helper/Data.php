@@ -19,17 +19,17 @@
  * @copyright   Copyright (c) 2016 Magestore (http://www.magestore.com/)
  * @license     http://www.magestore.com/license-agreement.html
  */
-
 class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
 {
+
     /**
      *
      * @var array
      */
     private $_ERPmoudles = array(
-                                'inventorysuccess',
+        'inventorysuccess',
 //                                'barcodesuccess'
-                            );
+    );
 
     /**
      *
@@ -41,7 +41,8 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
      *
      * @return string
      */
-    public function getCurrentModule() {
+    public function getCurrentModule()
+    {
         return Mage::registry('current_real_module_name');
     }
 
@@ -49,7 +50,8 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
      *
      * @return string
      */
-    public function getCurrentModuleKey($moduleName = null) {
+    public function getCurrentModuleKey($moduleName = null)
+    {
         $moduleName = $moduleName ? $moduleName : $this->getCurrentModule();
         $moduleName = str_replace('Magestore_', '', $moduleName);
         return strtolower($moduleName);
@@ -59,7 +61,8 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
      *
      * @return string
      */
-    public function getCurrentModuleName() {
+    public function getCurrentModuleName()
+    {
         $moduleName = $this->getCurrentModule();
         if (!$moduleName)
             return null;
@@ -74,11 +77,12 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
      *
      * @return boolean
      */
-    public function isERPmodule($moduleKey = null) {
+    public function isERPmodule($moduleKey = null)
+    {
 
-        if($moduleKey) {
+        if ($moduleKey) {
             $activeApps = $this->getActiveApps();
-            if(isset($activeApps[$moduleKey])){
+            if (isset($activeApps[$moduleKey])) {
                 return true;
             }
             return false;
@@ -99,9 +103,10 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
      * @param string $moduleName
      * @return string
      */
-    public function getDependModule($moduleName) {
+    public function getDependModule($moduleName)
+    {
         $appInfo = Mage::getConfig()->getModuleConfig($moduleName);
-        if (isset($appInfo->depends)) {
+        if (isset($appInfo->depends) && is_array($appInfo->depends->asArray())) {
             $depends = array_keys($appInfo->depends->asArray());
             if (count($depends)) {
                 foreach ($depends as $depend) {
@@ -117,7 +122,8 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
      *
      * @return boolean
      */
-    public function isApplyERPlayout() {
+    public function isApplyERPlayout()
+    {
         if (in_array($this->getCurrentModuleKey(), $this->_unapply_ERPlayout)) {
             return false;
         }
@@ -130,7 +136,8 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
      * @param string $field
      * @return string
      */
-    public function getAppConfig($app, $field) {
+    public function getAppConfig($app, $field)
+    {
         $appInfo = Mage::getConfig()->getModuleConfig($app);
         if (isset($appInfo->erp)) {
             if (isset($appInfo->erp->$field))
@@ -143,7 +150,8 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
      *
      * @return array
      */
-    public function getActiveApps() {
+    public function getActiveApps()
+    {
         $activeApps = array();
         $modules = Mage::getConfig()->getNode('modules')->children();
         foreach ($modules as $moduleName => $moduleInfo) {
@@ -153,7 +161,7 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
             if ($moduleName === 'Magestore_Magenotification') {
                 continue;
             }
-            if (strpos('a' . $moduleName, 'Magestore') == 0) {
+            if (strpos('a' . $moduleName, 'Magestore') === false) {
                 continue;
             }
 
@@ -175,7 +183,8 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
      *
      * @param Mage_Adminhtml_Controller_Action $controller
      */
-    public function updateConfigLayout($controller, $layout) {
+    public function updateConfigLayout($controller, $layout)
+    {
         $fullRequest = $controller->getFullActionName();
         $section = $this->getCurrentSectionConfig();
         $applied = false;
@@ -197,7 +206,8 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
      *
      * @return string
      */
-    public function getCurrentSectionConfig() {
+    public function getCurrentSectionConfig()
+    {
         $section = Mage::app()->getRequest()->getParam('section');
         if ($section == 'carriers') {
             if (Mage::app()->getRequest()->getParam('storepickup') == 1) {
