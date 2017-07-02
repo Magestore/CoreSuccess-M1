@@ -173,7 +173,7 @@ class Magestore_Coresuccess_Model_Mysql4_ProductSelection extends Magestore_Core
      * @param array $data
      * @return array
      */
-    public function prepareSetProducts(Magestore_Coresuccess_Model_Service_ProductSelection_SelectionInterface $selection, $data)
+    public function prepareSetProducts(Magestore_Coresuccess_Model_Service_ProductSelection_SelectionInterface $selection, $data , $fromCatalog = false)
     {
         $queries = array();
         /* load existed products from Selection */
@@ -194,7 +194,7 @@ class Magestore_Coresuccess_Model_Mysql4_ProductSelection extends Magestore_Core
         }
         /* remove existed products but not in post data */
         $deleteProducts = array_diff_key($existedProducts, $data);
-        if(count($deleteProducts)) {
+        if(count($deleteProducts) && !$fromCatalog) {
             $queries[] = $this->prepareRemoveProducts($selection, array_keys($deleteProducts));
         }
         

@@ -182,7 +182,7 @@ class Magestore_Coresuccess_Model_Service_ProductSelection_ProductSelectionServi
      * @param array $data
      * @return Magestore_Coresuccess_Model_Service_ProductSelection_ProductSelectionService
      */
-    public function setProducts(Magestore_Coresuccess_Model_Service_ProductSelection_SelectionInterface $selection, $data)
+    public function setProducts(Magestore_Coresuccess_Model_Service_ProductSelection_SelectionInterface $selection, $data , $fromCatalog = false)
     {
         /* start queries processing */
         $this->queryProcessorService->start(self::QUERY_PROCESS);
@@ -192,7 +192,7 @@ class Magestore_Coresuccess_Model_Service_ProductSelection_ProductSelectionServi
          * add new products
          * add queries to Processor 
          */
-        $queries = $this->getResource()->prepareSetProducts($selection, $data);
+        $queries = $this->getResource()->prepareSetProducts($selection, $data , $fromCatalog);
         $this->queryProcessorService->addQueries($queries, self::QUERY_PROCESS);
         
         /* process queries in Processor */
