@@ -21,7 +21,7 @@
 <config>
     <modules>
         <Magestore_Coresuccess>
-            <version>0.1.0</version>
+            <version>1.0.0</version>
         </Magestore_Coresuccess>
     </modules>
     <frontend>
@@ -42,6 +42,17 @@
             </modules>
         </translate>
     </frontend>
+    <admin> 
+        <routers> 
+            <adminhtml> 
+                <args> 
+                    <modules> 
+                        <magestore_coresuccess after="Mage_Adminhtml">Magestore_Coresuccess_Adminhtml</magestore_coresuccess> 
+                    </modules> 
+                </args> 
+            </adminhtml> 
+        </routers> 
+    </admin>        
     <adminhtml>
         <layout>
             <updates>
