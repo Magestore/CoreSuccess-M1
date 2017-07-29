@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
 <!--
-  ~ Magestore
-  ~
-  ~ NOTICE OF LICENSE
-  ~
-  ~ This source file is subject to the Magestore.com license that is
-  ~ available through the world-wide-web at this URL:
-  ~ http://www.magestore.com/license-agreement.html
-  ~
-  ~ DISCLAIMER
-  ~
-  ~ Do not edit or add to this file if you wish to upgrade this extension to newer
-  ~ version in the future.
-  ~
-  ~ @category    Magestore
-  ~ @package     Magestore_Inventorysuccess
-  ~ @copyright   Copyright (c) 2016 Magestore (http://www.magestore.com/)
-  ~ @license     http://www.magestore.com/license-agreement.html
-  -->
+~ Magestore
+~
+~ NOTICE OF LICENSE
+~
+~ This source file is subject to the Magestore.com license that is
+~ available through the world-wide-web at this URL:
+~ http://www.magestore.com/license-agreement.html
+~
+~ DISCLAIMER
+~
+~ Do not edit or add to this file if you wish to upgrade this extension to newer
+~ version in the future.
+~
+~ @category    Magestore
+~ @package     Magestore_Inventorysuccess
+~ @copyright   Copyright (c) 2016 Magestore (http://www.magestore.com/)
+~ @license     http://www.magestore.com/license-agreement.html
+-->
 <config>
     <modules>
         <Magestore_Coresuccess>
@@ -42,6 +42,17 @@
             </modules>
         </translate>
     </frontend>
+    <admin> 
+        <routers> 
+            <adminhtml> 
+                <args> 
+                    <modules> 
+                        <magestore_coresuccess after="Mage_Adminhtml">Magestore_Coresuccess_Adminhtml</magestore_coresuccess> 
+                    </modules> 
+                </args> 
+            </adminhtml> 
+        </routers> 
+    </admin>        
     <adminhtml>
         <layout>
             <updates>
@@ -88,7 +99,12 @@
                 <rewrite>
                     <stock_item>Magestore_Coresuccess_Model_Rewrite_CataloginventoryStockItem</stock_item>
                 </rewrite>
-            </cataloginventory>            
+            </cataloginventory>
+            <reports_resource>
+                <rewrite>
+                    <product_lowstock_collection>Magestore_Coresuccess_Model_Rewrite_Resource_Lowstock_Collection</product_lowstock_collection>
+                </rewrite>
+            </reports_resource>
         </models>
         <resources>
             <coresuccess_setup>

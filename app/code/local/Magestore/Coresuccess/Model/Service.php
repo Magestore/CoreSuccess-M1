@@ -28,6 +28,19 @@
  */
 class Magestore_Coresuccess_Model_Service
 {
+
+
+    /**
+     * get warehouse service
+     *
+     * @return Magestore_Reportsuccess_Model_Service_Inventoryreport_InventoryService
+     */
+    public static function reportInventoryService()
+    {
+        return self::getService('reportsuccess/service_inventoryreport_inventoryService');
+    }
+
+    
     /**
      * get warehouse service
      *
