@@ -31,7 +31,7 @@ class Magestore_Coresuccess_Model_Service
 
 
     /**
-     * get warehouse service
+     * get report service
      *
      * @return Magestore_Reportsuccess_Model_Service_Inventoryreport_InventoryService
      */
@@ -40,7 +40,7 @@ class Magestore_Coresuccess_Model_Service
         return self::getService('reportsuccess/service_inventoryreport_inventoryService');
     }
 
-    
+
     /**
      * get warehouse service
      *
