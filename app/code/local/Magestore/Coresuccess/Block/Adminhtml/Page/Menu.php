@@ -15,7 +15,7 @@
  * version in the future.
  *
  * @category    Magestore
- * @package     Magestore_Inventory
+ * @package     Magestore_Coresuccess
  * @copyright   Copyright (c) 2012 Magestore (http://www.magestore.com/)
  * @license     http://www.magestore.com/license-agreement.html
  */

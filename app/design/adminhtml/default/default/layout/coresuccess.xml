@@ -102,4 +102,17 @@
             </block>
         </block>        
     </adminhtml_coresuccess_process_run>    
+    
+    <adminhtml_coresuccess_dashboard>      
+        <update handle="adminhtml_coresuccess_one_column_layout" />  
+        <reference name="head">
+            <action method="addCss">
+                <stylesheet>css/magestore/coresuccess/dashboard.css</stylesheet>
+            </action>
+        </reference>        
+        <reference name="content">
+            <block type="coresuccess/adminhtml_dashboard" template="coresuccess/page/dashboard.phtml" />
+        </reference>
+    </adminhtml_coresuccess_dashboard>  
+        
 </layout>

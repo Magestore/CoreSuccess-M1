@@ -22,13 +22,29 @@
 class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
 {
 
+    const PRODUCT_FEED_URL = 'https://www.magestore.com/pfeed/erp/products.xml';
+    const PRODUCT_FEED_UPDATED_TIME_PATH = 'coresuccess/product_feed/updated_time';
+    const PRODUCT_FEED_CONTENT_PATH = 'coresuccess/product_feed/content';
+    
+    const TRACK_EVENT_URL = 'https://www.magestore.com/index.php/magestorefeed/log/new';
+    const TRACH_EVENT_UPDATED_TIME = 'coresuccess/track_event/updated_time';    
+    
+    const STATUS_ACTIVE = 1;    
+    const STATUS_NOT_INSTALL = 2;
+    const STATUS_COMINGSOON = 3;
+    
     /**
      *
      * @var array
      */
     private $_ERPmoudles = array(
         'inventorysuccess',
-//                                'barcodesuccess'
+        'barcodesuccess',
+        'purchaseordersuccess',
+        'suppliersuccess',
+        'fulfilsuccess',
+        'reportsuccess',
+        'webpos'
     );
 
     /**
@@ -215,6 +231,129 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
             }
         }
         return $section;
+    }
+    
+    /**
+     * Get list availabel apps
+     * 
+     * @return array
+     */
+    public function getAvailableApps() {
+        if(!Mage::registry('retailerkit_apps')) {
+            $apps = array();
+            try {
+                $appXML = new Varien_Simplexml_Element($this->getProductFeed());
+                $apps = $appXML->asArray();
+                /* remove CDATA, group by category */
+                if (count($apps)) {
+                    foreach ($apps as $key => $app) {
+                        foreach ($app as $attribute => $value) {
+                            $apps[$key][$attribute] = str_replace('<![CDATA[', '', str_replace(']]>', '', $value));
+                        }
+                    }
+                }
+            } catch (Exception $e) {
+                $this->getProductFeed(true);
+            }
+            Mage::register('retailerkit_apps', $apps);
+        }
+        return Mage::registry('retailerkit_apps');
+    }
+
+    /**
+     * Get product data from Magestore
+     * 
+     * @param boolean $needUpdate
+     * @return string
+     */
+    public function getProductFeed($needUpdate = false) 
+    {
+        $lastUpdate = Mage::getStoreConfig(self::PRODUCT_FEED_UPDATED_TIME_PATH);
+        $content = Mage::getStoreConfig(self::PRODUCT_FEED_CONTENT_PATH);
+        if (!$lastUpdate) {
+            $needUpdate = true;
+        } else {
+            $days = (strtotime(now()) - strtotime($lastUpdate)) / 86400;
+            if ($days > 1) {
+                $needUpdate = true;
+            }
+        }
+        if (!$content) {
+            $needUpdate = true;
+        }
+        if ($needUpdate) {
+            try {
+                $updateContent = (string) file_get_contents(self::PRODUCT_FEED_URL);
+                Mage::getConfig()->saveConfig(self::PRODUCT_FEED_CONTENT_PATH, $updateContent);
+                Mage::getConfig()->saveConfig(self::PRODUCT_FEED_UPDATED_TIME_PATH, now());
+                $content = $updateContent;
+            } catch (Exception $e) {
+                
+            }
+        }
+        return $content;
+    }
+    
+    /**
+     * Get using version of app
+     * 
+     * @param string $appName
+     * @return string
+     */
+    public function getAppVersion($appName) 
+    {
+        $appInfo = Mage::getConfig()->getModuleConfig($appName);
+        $version = isset($appInfo->public_version) ? (string) $appInfo->public_version : (string) $appInfo->version;
+        return $version;
+    }    
+    
+    /**
+     * 
+     * @param string $app
+     * @return array
+     */
+    public function getAppInfo($app)
+    {
+        $apps = $this->getAvailableApps();
+        $key = str_replace('magestore_', '', strtolower($app));
+        return isset($apps[$key]) ? $apps[$key] : array();
+    }
+    
+    /**
+     * @param string $app
+     * @return null|string
+     */
+    public function getAppUrl($app)
+    {
+        $appInfo = $this->getAppInfo($app);
+        return isset($appInfo['url']) ? $appInfo['url'] : null;
+    }
+    
+    /**
+     * 
+     * @param string $app
+     * @return boolean
+     */
+    public function isActiveApp($app)
+    {
+        return Mage::helper('core')->isModuleEnabled($app);
+    }
+    
+    /**
+     * 
+     * @param string $app
+     * @return int
+     */
+    public function getAppStatus($app)
+    {
+        if($this->isActiveApp($app)) {
+            return self::STATUS_ACTIVE;
+        }
+        $appInfo = $this->getAppInfo($app);
+        if(count($appInfo)) {
+            return self::STATUS_NOT_INSTALL;
+        }
+        return self::STATUS_COMINGSOON;
     }
 
 }
