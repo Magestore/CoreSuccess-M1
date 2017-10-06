@@ -49,9 +49,9 @@ class Magestore_Coresuccess_Block_Adminhtml_Page_Title extends Mage_Adminhtml_Bl
             $moduleName = uc_words($moduleKey);
         }
         if(strtolower($moduleName) == 'coresuccess'){
-            return 'Retailer Kit';
+            return 'Omnichannel';
         }
-        return 'Retailer Kit | '.$moduleName;
+        return 'Omnichannel | '.$moduleName;
     }
     
     /**
