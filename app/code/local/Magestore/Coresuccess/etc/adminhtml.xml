@@ -19,6 +19,7 @@
 ~ @license     http://www.magestore.com/license-agreement.html
 -->
 <config>
+    <!--
     <menu>
         <coresuccess_retailerkit module="coresuccess" translate="title">
             <title>Retailer Kit</title>
@@ -41,4 +42,5 @@
             </admin>
         </resources>
     </acl>
+    -->
 </config>
