@@ -578,6 +578,6 @@ class Magestore_Coresuccess_Model_Service
      */
     public static function orderProcessService()
     {
-        return self::getService('inventorysuccess/service_warehouse_orderProcessService');
+        return self::getService('inventorysuccess/service_orderProcess_orderProcessService');
     }         
 }
