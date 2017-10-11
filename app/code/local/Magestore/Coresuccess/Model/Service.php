@@ -582,7 +582,7 @@ class Magestore_Coresuccess_Model_Service
     }          
     
     /**
-     * @return Magestore_Inventorysuccess_Model_Service_OrderProcess_OrderProcessService
+     * @return Magestore_Inventorysuccess_Model_Service_OrderProcess_ChangeOrderWarehouseService
      */
     public static function changeOrderWarehouseService()
     {
