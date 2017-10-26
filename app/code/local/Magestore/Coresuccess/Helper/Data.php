@@ -27,9 +27,9 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
      * @var array
      */
     private $_ERPmoudles = array(
-                                'inventorysuccess',
+        'inventorysuccess',
 //                                'barcodesuccess'
-                            );
+    );
 
     /**
      *
@@ -121,6 +121,11 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
         if (in_array($this->getCurrentModuleKey(), $this->_unapply_ERPlayout)) {
             return false;
         }
+
+        if (Mage::app()->getRequest()->getRequestedControllerName() == 'catalog_product') {
+            return false;
+        }
+
         return $this->isERPmodule();
     }
 
