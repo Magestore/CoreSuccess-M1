@@ -585,4 +585,28 @@ class Magestore_Coresuccess_Model_Service
     {
         return self::getService('inventorysuccess/service_warehouse_storeService');
     }         
+    
+    /**
+     * @return Magestore_Inventorysuccess_Model_Service_OrderProcess_OrderProcessService
+     */
+    public static function orderProcessService()
+    {
+        return self::getService('inventorysuccess/service_orderProcess_orderProcessService');
+    }          
+    
+    /**
+     * @return Magestore_Inventorysuccess_Model_Service_OrderProcess_ChangeOrderWarehouseService
+     */
+    public static function changeOrderWarehouseService()
+    {
+        return self::getService('inventorysuccess/service_orderProcess_changeOrderWarehouseService');
+    }       
+    
+    /**
+     * @return Magestore_Inventorysuccess_Model_Service_StockMovement_StockTransferService
+     */
+    public static function stockTransferService()
+    {
+        return self::getService('inventorysuccess/service_stockMovement_stockTransferService');
+    }         
 }

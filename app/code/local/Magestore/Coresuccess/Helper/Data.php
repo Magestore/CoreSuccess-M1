@@ -25,14 +25,14 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
     const PRODUCT_FEED_URL = 'https://www.magestore.com/pfeed/erp/products.xml';
     const PRODUCT_FEED_UPDATED_TIME_PATH = 'coresuccess/product_feed/updated_time';
     const PRODUCT_FEED_CONTENT_PATH = 'coresuccess/product_feed/content';
-    
+
     const TRACK_EVENT_URL = 'https://www.magestore.com/index.php/magestorefeed/log/new';
-    const TRACH_EVENT_UPDATED_TIME = 'coresuccess/track_event/updated_time';    
-    
-    const STATUS_ACTIVE = 1;    
+    const TRACH_EVENT_UPDATED_TIME = 'coresuccess/track_event/updated_time';
+
+    const STATUS_ACTIVE = 1;
     const STATUS_NOT_INSTALL = 2;
     const STATUS_COMINGSOON = 3;
-    
+
     /**
      *
      * @var array
@@ -143,6 +143,11 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
         if (in_array($this->getCurrentModuleKey(), $this->_unapply_ERPlayout)) {
             return false;
         }
+
+        if (Mage::app()->getRequest()->getRequestedControllerName() == 'catalog_product') {
+            return false;
+        }
+
         return $this->isERPmodule();
     }
 
@@ -232,10 +237,10 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return $section;
     }
-    
+
     /**
      * Get list availabel apps
-     * 
+     *
      * @return array
      */
     public function getAvailableApps() {
@@ -262,11 +267,11 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Get product data from Magestore
-     * 
+     *
      * @param boolean $needUpdate
      * @return string
      */
-    public function getProductFeed($needUpdate = false) 
+    public function getProductFeed($needUpdate = false)
     {
         $lastUpdate = Mage::getStoreConfig(self::PRODUCT_FEED_UPDATED_TIME_PATH);
         $content = Mage::getStoreConfig(self::PRODUCT_FEED_CONTENT_PATH);
@@ -288,27 +293,27 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
                 Mage::getConfig()->saveConfig(self::PRODUCT_FEED_UPDATED_TIME_PATH, now());
                 $content = $updateContent;
             } catch (Exception $e) {
-                
+
             }
         }
         return $content;
     }
-    
+
     /**
      * Get using version of app
-     * 
+     *
      * @param string $appName
      * @return string
      */
-    public function getAppVersion($appName) 
+    public function getAppVersion($appName)
     {
         $appInfo = Mage::getConfig()->getModuleConfig($appName);
         $version = isset($appInfo->public_version) ? (string) $appInfo->public_version : (string) $appInfo->version;
         return $version;
-    }    
-    
+    }
+
     /**
-     * 
+     *
      * @param string $app
      * @return array
      */
@@ -318,7 +323,7 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
         $key = str_replace('magestore_', '', strtolower($app));
         return isset($apps[$key]) ? $apps[$key] : array();
     }
-    
+
     /**
      * @param string $app
      * @return null|string
@@ -328,9 +333,9 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
         $appInfo = $this->getAppInfo($app);
         return isset($appInfo['url']) ? $appInfo['url'] : null;
     }
-    
+
     /**
-     * 
+     *
      * @param string $app
      * @return boolean
      */
@@ -338,9 +343,9 @@ class Magestore_Coresuccess_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return Mage::helper('core')->isModuleEnabled($app);
     }
-    
+
     /**
-     * 
+     *
      * @param string $app
      * @return int
      */
