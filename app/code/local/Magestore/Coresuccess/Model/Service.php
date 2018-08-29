@@ -608,5 +608,13 @@ class Magestore_Coresuccess_Model_Service
     public static function stockTransferService()
     {
         return self::getService('inventorysuccess/service_stockMovement_stockTransferService');
-    }         
+    }
+
+    /**
+     * @return Magestore_Barcodesuccess_Model_Service_CsvService
+     */
+    public static function csvService()
+    {
+        return self::getService('barcodesuccess/service_csvService');
+    }
 }
