@@ -611,10 +611,10 @@ class Magestore_Coresuccess_Model_Service
     }
 
     /**
-     * @return Magestore_Barcodesuccess_Model_Service_CsvService
+     * @return Magestore_Coresuccess_Model_Service_FileProcess_CsvService
      */
     public static function csvService()
     {
-        return self::getService('barcodesuccess/service_csvService');
+        return self::getService('coresuccess/service_fileProcess_csvService');
     }
 }
